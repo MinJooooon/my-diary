@@ -4,14 +4,18 @@ import com.mydiary.common.exception.NotFoundException;
 import com.mydiary.user.model.dto.UserDto;
 import com.mydiary.user.model.entity.User;
 import com.mydiary.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+@RequiredArgsConstructor
+@Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     UserRepository userRepository;
