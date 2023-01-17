@@ -1,5 +1,6 @@
 package com.mydiary.user.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.mydiary.user.model.entity.User;
 import lombok.Builder;
 import lombok.Data;
@@ -21,17 +22,6 @@ public class UserDto {
 
     @Data
     @Builder
-    public static class UserInfoDto {
-        private Long id;
-        private String username;
-        private String name;
-        private String phone;
-        private LocalDate birthDate;
-        private String role;
-    }
-
-    @Data
-    @Builder
     public static class SignUpDto {
         private String username;
         private String password;
@@ -49,5 +39,25 @@ public class UserDto {
                     .userRole("USER")
                     .build();
         }
+    }
+
+    @Data
+    @Builder
+    public static class SignInDto {
+        private String username;
+        private String password;
+    }
+
+    @Data
+    @Builder
+    @JsonInclude(value = JsonInclude.Include.NON_EMPTY)
+    public static class Response {
+        private Long id;
+        private String username;
+        private String name;
+        private String phone;
+        private LocalDate birthDate;
+        private String role;
+        private String accessToken;
     }
 }

@@ -32,10 +32,21 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<ResponseDto<String>> doSignUp(
             @RequestBody UserDto.SignUpDto signUpDto) {
-        if(!isNull(userService.getUserInfoByUsername(signUpDto.getUsername()))) {
+        if(!userService.getUserIdByUsername(signUpDto.getUsername()).equals(0L)) {
             throw new BadRequestException("이미 존재하는 ID 입니다.");
         }
         return userService.SignUp(signUpDto);
+    }
+
+    @ApiOperation(value = "로그인", notes = "로그인을 합니다./\n")
+    @PostMapping("/signin")
+    public UserDto.Response doSignIn(
+            @RequestBody UserDto.SignInDto signInDto) {
+        Long userId = userService.getUserIdByUsernameAndPassword(signInDto.getUsername(), signInDto.getPassword());
+        if(userId.equals(0L)) {
+            throw new BadRequestException("ID/비밀번호를 확인해주세요.");
+        }
+        return userService.SignIn(userId);
     }
 
 }
