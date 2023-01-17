@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(name = "user")
-@Where(clause = "show_yn = 1")
+@Where(clause = "delete_yn = 0")
 public class User extends BaseTimeEntity {
 
     @Id
@@ -38,6 +38,6 @@ public class User extends BaseTimeEntity {
     @Column(name = "user_role")
     private String userRole;
 
-    @Column(name = "show_yn")
-    private boolean showYn;
+    @Column(name = "delete_yn")
+    private boolean deleteYn;
 }

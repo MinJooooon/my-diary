@@ -33,6 +33,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                .authorizeRequests()
+                .antMatchers("/").permitAll()
+                .and()
                 .exceptionHandling().accessDeniedHandler(new AccessDeniedHandlerImpl())
                 .and()
                 .exceptionHandling().authenticationEntryPoint(new AuthenticationEntryPointImpl())
@@ -42,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity webSecurity) {
-        webSecurity.ignoring().antMatchers("/v2/api-docs", "/swagger-resources/**",
-                "/swagger*/**", "/webjars/**");
+        webSecurity.ignoring().antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger*/**",
+                "/user/**", "/webjars/**");
     }
 }
