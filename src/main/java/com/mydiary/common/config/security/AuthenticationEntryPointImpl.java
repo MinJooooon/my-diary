@@ -1,6 +1,8 @@
 package com.mydiary.common.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mydiary.common.model.dto.ResponseDto;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -13,8 +15,14 @@ import java.io.IOException;
 public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
 
     @Override
-    public void commence(HttpServletRequest httpServletRequestrequest, HttpServletResponse httpServletResponseresponse,
+    public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                          AuthenticationException ex) throws IOException {
-        httpServletResponseresponse.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+        httpServletResponse.setContentType("application/json");
+        httpServletResponse.setCharacterEncoding("utf-8");
+        ResponseDto<String> responseDto = new ResponseDto<>("인증에 실패하였습니다.");
+        httpServletResponse.getWriter().write(objectMapper.writeValueAsString(responseDto));
     }
 }

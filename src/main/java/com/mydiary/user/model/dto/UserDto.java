@@ -50,6 +50,21 @@ public class UserDto {
 
     @Data
     @Builder
+    public static class UserInfoDto {
+        private String name;
+        private String phone;
+        private LocalDate birthDate;
+    }
+
+    @Data
+    @Builder
+    public static class ChangePasswordDto {
+        private String currentPassword;
+        private String newPassword;
+    }
+
+    @Data
+    @Builder
     @JsonInclude(value = JsonInclude.Include.NON_EMPTY)
     public static class Response {
         private Long id;

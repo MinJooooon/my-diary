@@ -1,5 +1,8 @@
 package com.mydiary.common.config.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mydiary.common.model.dto.ResponseDto;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
@@ -14,6 +17,12 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                        AccessDeniedException accessDeniedException) throws IOException {
-        httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+        httpServletResponse.setContentType("application/json");
+        httpServletResponse.setCharacterEncoding("utf-8");
+        ResponseDto<String> responseDto = new ResponseDto<>("인증에 실패하였습니다.");
+        httpServletResponse.getWriter().write(objectMapper.writeValueAsString(responseDto));
     }
 }
