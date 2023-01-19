@@ -1,6 +1,5 @@
 package com.mydiary;
 
-import com.mydiary.common.exception.NotFoundException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.boot.SpringApplication;

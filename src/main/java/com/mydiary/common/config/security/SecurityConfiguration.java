@@ -36,6 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/user/profile", "/user/change-profile", "/user/change-password", "/user/delete").authenticated()
+                .antMatchers("/book/*").authenticated()
                 .and()
                 .exceptionHandling().accessDeniedHandler(new AccessDeniedHandlerImpl())
                 .and()

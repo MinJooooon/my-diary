@@ -2,7 +2,6 @@ package com.mydiary.user.service;
 
 import com.mydiary.common.config.security.JwtTokenProvider;
 import com.mydiary.common.exception.BadRequestException;
-import com.mydiary.common.exception.NotFoundException;
 import com.mydiary.common.model.dto.ResponseDto;
 import com.mydiary.user.model.dto.UserDto;
 import com.mydiary.user.model.entity.User;
@@ -46,7 +45,7 @@ public class UserService {
             user = userRepository.findById(userId).get();
         }
         catch(NoSuchElementException e) {
-            throw new NotFoundException("존재하지 않는 유저입니다.");
+            throw new BadRequestException("존재하지 않는 유저입니다.");
         }
         
         String accessToken = jwtTokenProvider.createAccessToken(String.valueOf(user.getId()), Arrays.asList(user.getUserRole()));
@@ -65,7 +64,7 @@ public class UserService {
             user = userRepository.findById(userId).get();
         }
         catch(NoSuchElementException e) {
-            throw new NotFoundException("존재하지 않는 유저입니다.");
+            throw new BadRequestException("존재하지 않는 유저입니다.");
         }
         
         return UserDto.Response.builder()
@@ -83,7 +82,7 @@ public class UserService {
             user = userRepository.findById(userId).get();
         }
         catch(NoSuchElementException e) {
-            throw new NotFoundException("존재하지 않는 유저입니다.");
+            throw new BadRequestException("존재하지 않는 유저입니다.");
         }
         user.setName(userInfoDto.getName());
         user.setPhone(userInfoDto.getPhone());
@@ -100,7 +99,7 @@ public class UserService {
             user = userRepository.findById(userId).get();
         }
         catch(NoSuchElementException e) {
-            throw new NotFoundException("존재하지 않는 유저입니다.");
+            throw new BadRequestException("존재하지 않는 유저입니다.");
         }
         if(!passwordEncoder.matches(changePasswordDto.getCurrentPassword(), user.getPassword())) {
             throw new BadRequestException("현재 비밀번호가 틀립니다.");
@@ -119,7 +118,7 @@ public class UserService {
             user = userRepository.findById(userId).get();
         }
         catch(NoSuchElementException e) {
-            throw new NotFoundException("존재하지 않는 유저입니다.");
+            throw new BadRequestException("존재하지 않는 유저입니다.");
         }
         user.setDeleteYn(true);
         userRepository.save(user);

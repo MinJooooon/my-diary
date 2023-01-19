@@ -1,7 +1,6 @@
 package com.mydiary.user.controller;
 
 import com.mydiary.common.exception.BadRequestException;
-import com.mydiary.common.exception.NotFoundException;
 import com.mydiary.common.model.dto.ResponseDto;
 import com.mydiary.user.model.dto.UserDto;
 import com.mydiary.user.service.UserService;
@@ -44,9 +43,6 @@ public class UserController {
     public UserDto.Response doSignIn(
             @RequestBody UserDto.SignInDto signInDto) {
         Long userId = userService.getUserIdByUsernameAndPassword(signInDto.getUsername(), signInDto.getPassword());
-        if(userId.equals(0L)) {
-            throw new BadRequestException("ID/비밀번호를 확인해주세요.");
-        }
         return userService.SignIn(userId);
     }
 
@@ -55,9 +51,6 @@ public class UserController {
     public UserDto.Response getUserInfo(HttpServletRequest httpServletRequest) {
         Long id = Long.valueOf(String.valueOf(httpServletRequest.getAttribute("id")));
         Long userId = userService.checkUserId(id);
-        if(userId.equals(0L)) {
-            throw new NotFoundException("존재하지 않거나 탈퇴한 유저입니다.");
-        }
         return userService.getUserInfo(userId);
     }
 
@@ -68,9 +61,6 @@ public class UserController {
             @RequestBody UserDto.UserInfoDto userInfoDto) {
         Long id = Long.valueOf(String.valueOf(httpServletRequest.getAttribute("id")));
         Long userId = userService.checkUserId(id);
-        if(userId.equals(0L)) {
-            throw new NotFoundException("존재하지 않거나 탈퇴한 유저입니다.");
-        }
 
         return userService.changeUserInfo(userId, userInfoDto);
     }
@@ -82,9 +72,6 @@ public class UserController {
             @RequestBody UserDto.ChangePasswordDto changePasswordDto) {
         Long id = Long.valueOf(String.valueOf(httpServletRequest.getAttribute("id")));
         Long userId = userService.checkUserId(id);
-        if(userId.equals(0L)) {
-            throw new NotFoundException("존재하지 않거나 탈퇴한 유저입니다.");
-        }
         return userService.changePassword(userId, changePasswordDto);
     }
 
@@ -93,9 +80,6 @@ public class UserController {
     public ResponseEntity<ResponseDto<String>> deleteUser(HttpServletRequest httpServletRequest) {
         Long id = Long.valueOf(String.valueOf(httpServletRequest.getAttribute("id")));
         Long userId = userService.checkUserId(id);
-        if(userId.equals(0L)) {
-            throw new NotFoundException("존재하지 않거나 탈퇴한 유저입니다.");
-        }
         return userService.deleteUser(userId);
     }
 }
