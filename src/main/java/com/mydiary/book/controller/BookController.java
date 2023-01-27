@@ -40,6 +40,28 @@ public class BookController {
         return bookService.getBook(bookId, userId);
     }
 
+    @ApiOperation(value = "도서 목록조회", notes = "도서 목록을 조회합니다.\n")
+    @GetMapping("/list")
+    public BookDto.BookListDto getBookList(
+            HttpServletRequest httpServletRequest,
+            @RequestParam Integer page,
+            @RequestParam Integer size) {
+        Long userId = Long.valueOf(String.valueOf(httpServletRequest.getAttribute("id")));
+        page -= 1;
+        return bookService.getBookList(userId, page, size);
+    }
+
+    @ApiOperation(value = "도서 정보 변경", notes = "도서 정보를 변경합니다.\n")
+    @PatchMapping("/{bookId}")
+    public ResponseEntity<ResponseDto<String>> update(
+            HttpServletRequest httpServletRequest,
+            @PathVariable Long bookId,
+            @RequestBody BookDto.BookInfoDto bookInfoDto) {
+        Long userId = Long.valueOf(String.valueOf(httpServletRequest.getAttribute("id")));
+
+        return bookService.updateBook(userId, bookId, bookInfoDto);
+    }
+
     @ApiOperation(value = "도서 삭제", notes = "도서를 삭제합니다.\n")
     @DeleteMapping("/{bookId}")
     public ResponseEntity<ResponseDto<String>> deleteBook(

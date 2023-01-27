@@ -6,9 +6,29 @@ import com.mydiary.user.model.entity.User;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Builder
 public class BookDto {
+
+    @Data
+    @Builder
+    public static class BookListDto {
+        private List<BookSimpleDto> results;
+        private Integer page;
+        private Integer size;
+        private Integer totalPages;
+        private Long totalElements;
+    }
+
+    @Data
+    @Builder
+    public static class BookSimpleDto {
+        Long id;
+        String title;
+        String author;
+    }
 
     @Data
     @Builder
